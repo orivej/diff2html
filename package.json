@@ -46,8 +46,7 @@
     "fs": false
   },
   "dependencies": {
-    "diff": "^2.2.2",
-    "hogan.js": "^3.0.2"
+    "diff": "^2.2.2"
   },
   "devDependencies": {
     "browserify": "^13.0.0",
@@ -57,7 +56,9 @@
     "istanbul": "^0.4.2",
     "jscs": "^2.11.0",
     "mocha": "^2.4.5",
-    "uglifyjs": "^2.4.10"
+    "mustache-loader": "^0.3.1",
+    "uglifyjs": "^2.4.10",
+    "webpack": "^1.13.0"
   },
   "license": "MIT",
   "files": [

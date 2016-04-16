@@ -12,15 +12,20 @@
   var utils = require('./utils.js').Utils;
   var Rematch = require('./rematch.js').Rematch;
 
-  var hoganUtils = require('./hoganjs-utils.js').HoganJsUtils;
   var baseTemplatesPath = 'line-by-line';
+
+  var tLLColumnLineNumber = require('./templates/line-by-line-column-line-number.mustache');
+  var tLLEmptyDiff = require('./templates/line-by-line-empty-diff.mustache');
+  var tLLFileDiff = require('./templates/line-by-line-file-diff.mustache');
+  var tLLLine = require('./templates/line-by-line-line.mustache');
+  var tLLWrapper = require('./templates/line-by-line-wrapper.mustache');
 
   function LineByLinePrinter(config) {
     this.config = config;
   }
 
   LineByLinePrinter.prototype.makeFileDiffHtml = function(file, diffs) {
-    return hoganUtils.render(baseTemplatesPath, 'file-diff', {
+    return tLLFileDiff({
       file: file,
       fileDiffName: printerUtils.getDiffName(file),
       fileHtmlId: printerUtils.getHtmlId(file),
@@ -29,7 +34,7 @@
   };
 
   LineByLinePrinter.prototype.makeLineByLineHtmlWrapper = function(content) {
-    return hoganUtils.render(baseTemplatesPath, 'wrapper', {'content': content});
+    return tLLWrapper({'content': content});
   };
 
   LineByLinePrinter.prototype.generateLineByLineJsonHtml = function(diffFiles) {
@@ -55,7 +60,7 @@
   });
 
   LineByLinePrinter.prototype.makeColumnLineNumberHtml = function(block) {
-    return hoganUtils.render(baseTemplatesPath, 'column-line-number', {
+    return tLLColumnLineNumber({
       diffParser: diffParser,
       block: utils.escape(block.header)
     });
@@ -170,8 +175,7 @@
   };
 
   LineByLinePrinter.prototype.makeLineHtml = function(type, oldNumber, newNumber, content, prefix) {
-    return hoganUtils.render(baseTemplatesPath, 'line',
-      {
+    return tLLLine({
         type: type,
         oldNumber: utils.valueOrEmpty(oldNumber),
         newNumber: utils.valueOrEmpty(newNumber),
@@ -181,7 +185,7 @@
   };
 
   LineByLinePrinter.prototype._generateEmptyDiff = function() {
-    return hoganUtils.render(baseTemplatesPath, 'empty-diff', {
+    return tLLEmptyDiff({
       diffParser: diffParser
     });
   };
